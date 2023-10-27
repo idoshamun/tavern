@@ -1,0 +1,27 @@
+create table if not exists spells
+(
+    id                        text primary key not null,
+    name                      text             not null,
+    description               text             not null,
+    higher_level              text[]           not null default '{}',
+    range                     text             not null,
+    components                text[]           not null default '{}',
+    material                  text             null,
+    is_ritual                 boolean          not null,
+    duration                  text             not null,
+    is_concentration          boolean          not null,
+    casting_time              text             not null,
+    level                     integer          not null,
+    attack_type               text             null,
+    damage_type               text             null,
+    damage_at_slot_level      jsonb            null,
+    damage_at_character_level jsonb            null,
+    school                    text             not null,
+    dc_type                   text             null,
+    dc_success                text             null,
+    dc_description            text             null,
+    heal_at_slot_level        jsonb            null,
+    aoe_type                  text             null,
+    aoe_size                  integer          null,
+    fts tsvector generated always as (to_tsvector('english', name)) stored
+);

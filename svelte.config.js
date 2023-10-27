@@ -1,5 +1,8 @@
+import './config.js';
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+
+process.env.PUBLIC_APP_NAME = 'Tavern';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
