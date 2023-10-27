@@ -1,5 +1,5 @@
 <script>
-	import { supabase } from '$lib';
+	// import { supabase } from '$lib';
 
 	// supabase.from('spells').select().textSearch('fts', 'acid')
 	//     .then(({ data, error }) => {

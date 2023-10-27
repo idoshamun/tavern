@@ -20,6 +20,7 @@
 		"@skeletonlabs/tw-plugin": "^0.2.3",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@tailwindcss/forms": "^0.5.6",
 		"@types/node": "^20.8.9",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
@@ -43,6 +44,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/ssr": "^0.0.4",
 		"@supabase/supabase-js": "^2.38.2",
 		"dotenv": "^16.3.1"
 	}
