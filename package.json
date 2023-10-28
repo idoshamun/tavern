@@ -13,9 +13,10 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"bin": "vite-node --options.transformMode.ssr='/.*/'",
 		"types:srd": "quicktype ../5e-database/src -o src/types/srd.types.ts --just-types",
-		"types:db": "supabase gen types typescript --local > src/types/database.types.ts"
+		"types:db": "supabase gen types typescript --linked > src/types/database.types.ts"
 	},
 	"devDependencies": {
+		"@iconify-json/jam": "^1.1.5",
 		"@skeletonlabs/skeleton": "^2.4.0",
 		"@skeletonlabs/tw-plugin": "^0.2.3",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -44,8 +45,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@floating-ui/dom": "^1.5.3",
 		"@supabase/ssr": "^0.0.4",
 		"@supabase/supabase-js": "^2.38.2",
-		"dotenv": "^16.3.1"
+		"dotenv": "^16.3.1",
+		"unplugin-icons": "^0.17.1"
 	}
 }

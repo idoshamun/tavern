@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises';
 import { join as joinPath } from 'path';
 import type { The5ESRDSpells } from '../types/srd.types';
-import type { Tables } from '../types/utils.types';
+import type { Insert } from '../types/utils.types';
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '../types/database.types';
 import { env as privateEnv } from '$env/dynamic/private';
@@ -20,13 +20,26 @@ async function loadSrdFile<T>(name: string): Promise<T> {
 	return JSON.parse(content);
 }
 
+async function loadEntities(entities: { index: string; name: string, desc: string[] }[], type: string): Promise<void> {
+	const db = entities.map((x): Insert<'entities'> => ({
+		id: x.index,
+		name: x.name,
+		description: x.desc.join('\n'),
+		type,
+	}));
+	console.log(`inserting ${db.length} entities`);
+	const { error } = await supabase.from('entities').insert(db);
+	if (error) {
+		throw error;
+	}
+}
+
 async function loadSpells(): Promise<void> {
 	const srd = await loadSrdFile<The5ESRDSpells[]>('5e-SRD-Spells.json');
+	await loadEntities(srd, 'spells');
 	const db = srd.map(
-		(spell): Tables<'spells'> => ({
+		(spell): Insert<'spells'> => ({
 			id: spell.index,
-			name: spell.name,
-			description: spell.desc.join('\n'),
 			higher_level: spell.higher_level || [],
 			range: spell.range,
 			components: spell.components,
@@ -47,7 +60,8 @@ async function loadSpells(): Promise<void> {
 			heal_at_slot_level: spell.heal_at_slot_level || null,
 			aoe_type: spell.area_of_effect?.type || null,
 			aoe_size: spell.area_of_effect?.size || null,
-			fts: null
+			classes: spell.classes?.map(x => x.index) || [],
+			subclasses: spell.subclasses?.map(x => x.index) || [],
 		})
 	);
 	console.log(`inserting ${db.length} spells`);
