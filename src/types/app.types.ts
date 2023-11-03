@@ -1,4 +1,4 @@
-import type { Tables } from "./utils.types";
+import type { Tables } from './utils.types';
 
 export type Spell = Tables<'entities'> & { type: 'spells' } & Tables<'spells'>;
 export type Entity = Spell;

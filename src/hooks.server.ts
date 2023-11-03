@@ -20,18 +20,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	);
 
-	const sup = createServerClient<Database>(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
-		cookies: {
-			get: (key) => event.cookies.get(key),
-			set: (key, value, options) => {
-				event.cookies.set(key, value, options);
-			},
-			remove: (key, options) => {
-				event.cookies.delete(key, options);
-			}
-		}
-	});
-
 	/**
 	 * a little helper that is written for convenience so that instead
 	 * of calling `const { data: { session } } = await supabase.auth.getSession()`

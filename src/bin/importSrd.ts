@@ -20,13 +20,18 @@ async function loadSrdFile<T>(name: string): Promise<T> {
 	return JSON.parse(content);
 }
 
-async function loadEntities(entities: { index: string; name: string, desc: string[] }[], type: string): Promise<void> {
-	const db = entities.map((x): Insert<'entities'> => ({
-		id: x.index,
-		name: x.name,
-		description: x.desc.join('\n'),
-		type,
-	}));
+async function loadEntities(
+	entities: { index: string; name: string; desc: string[] }[],
+	type: string
+): Promise<void> {
+	const db = entities.map(
+		(x): Insert<'entities'> => ({
+			id: x.index,
+			name: x.name,
+			description: x.desc.join('\n'),
+			type
+		})
+	);
 	console.log(`inserting ${db.length} entities`);
 	const { error } = await supabase.from('entities').insert(db);
 	if (error) {
@@ -60,8 +65,8 @@ async function loadSpells(): Promise<void> {
 			heal_at_slot_level: spell.heal_at_slot_level || null,
 			aoe_type: spell.area_of_effect?.type || null,
 			aoe_size: spell.area_of_effect?.size || null,
-			classes: spell.classes?.map(x => x.index) || [],
-			subclasses: spell.subclasses?.map(x => x.index) || [],
+			classes: spell.classes?.map((x) => x.index) || [],
+			subclasses: spell.subclasses?.map((x) => x.index) || []
 		})
 	);
 	console.log(`inserting ${db.length} spells`);

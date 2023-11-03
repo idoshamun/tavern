@@ -1,25 +1,21 @@
 <script lang="ts">
 	import { getEntityUrl } from '$lib/entities';
+	import { groupBy } from '$lib/utils';
+	import type { Entity } from '../../../types/app.types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	// group entities by level
-	$: entitiesByLevel = data.entities.reduce((acc, entity) => {
-		if (!acc[entity.level]) {
-			acc[entity.level] = [];
-		}
-		acc[entity.level].push(entity);
-		return acc;
-	}, {});
+	$: entitiesByLevel = groupBy(data.entities as Entity[], 'level');
 	$: levels = Object.keys(entitiesByLevel).sort((a, b) => Number(a) - Number(b));
 
-    function getLevel(level: string): string {
-        if (level === '0') {
-            return 'Cantrip';
-        }
-        return `Level ${level}`;
-    }
+	function getLevel(level: string): string {
+		if (level === '0') {
+			return 'Cantrip';
+		}
+		return `Level ${level}`;
+	}
 </script>
 
 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

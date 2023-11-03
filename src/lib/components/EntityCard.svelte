@@ -39,7 +39,7 @@
 			<div class="table-container">
 				<table class="table">
 					<tbody>
-						{#each rows as row, i}
+						{#each rows as row}
 							<tr>
 								<td class="font-bold">{row.name}</td>
 								<td>{row.value} </td>
@@ -62,7 +62,7 @@
 	</div>
 </div>
 
-{#each popups as popup, i}
+{#each popups as popup}
 	<div
 		class="z-10 max-w-md p-4 whitespace-pre-line card variant-filled-surface"
 		data-popup={popup.name}
