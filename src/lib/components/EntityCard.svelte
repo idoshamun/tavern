@@ -24,40 +24,44 @@
 		<div class="p-4 space-y-2">
 			<h6 class="h6">{humanizeId(entity.type)}</h6>
 			<h3 class="h3">{entity.name}</h3>
-			<div class="flex flex-row space-x-2">
-				{#each entity.components as comp}
-					<span class="chip variant-filled-secondary">{comp}</span>
-				{/each}
-				{#if entity.is_ritual}
-					<span class="chip variant-filled-secondary">Ritual</span>
-				{/if}
-				{#if entity.is_concentration}
-					<span class="chip variant-filled-secondary">Concentration</span>
-				{/if}
-			</div>
-			<p>{entity.description}</p>
-			<div class="table-container">
-				<table class="table">
-					<tbody>
-						{#each rows as row}
-							<tr>
-								<td class="font-bold">{row.name}</td>
-								<td>{row.value} </td>
-								<td>
-									{#if row.popup}
-										<button
-											class="btn-icon btn-icon-sm !bg-transparent"
-											use:popup={getPopupSetting(row.popup)}
-										>
-											<Info />
-										</button>
-									{/if}
-								</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
+			{#if entity.type === 'spells'}
+				<div class="flex flex-row space-x-2">
+					{#each entity.components as comp}
+						<span class="chip variant-filled-secondary">{comp}</span>
+					{/each}
+					{#if entity.is_ritual}
+						<span class="chip variant-filled-secondary">Ritual</span>
+					{/if}
+					{#if entity.is_concentration}
+						<span class="chip variant-filled-secondary">Concentration</span>
+					{/if}
+				</div>
+			{/if}
+			<p class="whitespace-pre-line">{entity.description}</p>
+			{#if entity.type === 'spells'}
+				<div class="table-container">
+					<table class="table">
+						<tbody>
+							{#each rows as row}
+								<tr>
+									<td class="font-bold">{row.name}</td>
+									<td>{row.value} </td>
+									<td>
+										{#if row.popup}
+											<button
+												class="btn-icon btn-icon-sm !bg-transparent"
+												use:popup={getPopupSetting(row.popup)}
+											>
+												<Info />
+											</button>
+										{/if}
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>

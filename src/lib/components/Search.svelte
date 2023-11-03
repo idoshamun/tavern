@@ -1,17 +1,13 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import Search from 'virtual:icons/jam/search';
-	import Magic from 'virtual:icons/jam/magic';
 	import { getEntityUrl } from '$lib/entities';
 	import type { Tables } from '../../types/utils.types';
 	import { supabase } from '$lib/supabase';
 	import { groupBy } from '$lib/utils';
+	import { typeIcons } from '$lib/icons';
 
 	const minQuery = 2;
-	const icons: Record<string, SvelteComponent> = {
-		spells: Magic
-	};
 
 	// Classes
 	const cBase =
@@ -97,7 +93,7 @@
 								}}
 							>
 								<div class="flex items-center gap-4">
-									<svelte:component this={icons[entity.type]} />
+									<svelte:component this={typeIcons[entity.type]} />
 									<span class="flex-auto font-bold opacity-75">{entity.name}</span>
 								</div>
 								<span class="hidden text-xs opacity-50 md:block">{entity.href}</span>

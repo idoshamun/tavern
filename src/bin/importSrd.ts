@@ -7,6 +7,8 @@ import type { Database } from '../types/database.types';
 import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 
+type SrdEntity = { index: string; name: string; desc: string[] };
+
 const DATABASE_PATH = joinPath(__dirname, '..', '..', '..', '5e-database', 'src');
 
 const supabase = createClient<Database>(
@@ -20,10 +22,7 @@ async function loadSrdFile<T>(name: string): Promise<T> {
 	return JSON.parse(content);
 }
 
-async function loadEntities(
-	entities: { index: string; name: string; desc: string[] }[],
-	type: string
-): Promise<void> {
+async function loadEntities(entities: SrdEntity[], type: string): Promise<void> {
 	const db = entities.map(
 		(x): Insert<'entities'> => ({
 			id: x.index,
@@ -76,8 +75,14 @@ async function loadSpells(): Promise<void> {
 	}
 }
 
+async function loadConditions(): Promise<void> {
+	const srd = await loadSrdFile<SrdEntity[]>('5e-SRD-Conditions.json');
+	await loadEntities(srd, 'conditions');
+}
+
 async function main(): Promise<void> {
 	await loadSpells();
+	await loadConditions();
 }
 
 main()
