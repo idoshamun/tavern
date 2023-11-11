@@ -28,29 +28,234 @@ export interface Database {
 	};
 	public: {
 		Tables: {
+			classes: {
+				Row: {
+					hit_die: number;
+					id: string;
+					proficiencies: string[];
+					saving_throws: string[];
+					spellcasting_ability: string | null;
+					subclasses: string[];
+				};
+				Insert: {
+					hit_die: number;
+					id: string;
+					proficiencies?: string[];
+					saving_throws?: string[];
+					spellcasting_ability?: string | null;
+					subclasses?: string[];
+				};
+				Update: {
+					hit_die?: number;
+					id?: string;
+					proficiencies?: string[];
+					saving_throws?: string[];
+					spellcasting_ability?: string | null;
+					subclasses?: string[];
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'classes_id_fkey';
+						columns: ['id'];
+						isOneToOne: true;
+						referencedRelation: 'entities';
+						referencedColumns: ['id'];
+					}
+				];
+			};
 			entities: {
 				Row: {
-					description: string;
+					description: string | null;
 					fts: unknown | null;
 					id: string;
 					name: string;
 					type: string;
 				};
 				Insert: {
-					description: string;
+					description?: string | null;
 					fts?: unknown | null;
 					id: string;
 					name: string;
 					type: string;
 				};
 				Update: {
-					description?: string;
+					description?: string | null;
 					fts?: unknown | null;
 					id?: string;
 					name?: string;
 					type?: string;
 				};
 				Relationships: [];
+			};
+			features: {
+				Row: {
+					class: string;
+					feature_specific: Json | null;
+					id: string;
+					level: number;
+					parent: string | null;
+					prerequisites: Json | null;
+					subclass: string | null;
+				};
+				Insert: {
+					class: string;
+					feature_specific?: Json | null;
+					id: string;
+					level: number;
+					parent?: string | null;
+					prerequisites?: Json | null;
+					subclass?: string | null;
+				};
+				Update: {
+					class?: string;
+					feature_specific?: Json | null;
+					id?: string;
+					level?: number;
+					parent?: string | null;
+					prerequisites?: Json | null;
+					subclass?: string | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'features_class_fkey';
+						columns: ['class'];
+						isOneToOne: false;
+						referencedRelation: 'classes';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'features_id_fkey';
+						columns: ['id'];
+						isOneToOne: true;
+						referencedRelation: 'entities';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'features_parent_fkey';
+						columns: ['parent'];
+						isOneToOne: false;
+						referencedRelation: 'features';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'features_subclass_fkey';
+						columns: ['subclass'];
+						isOneToOne: false;
+						referencedRelation: 'subclasses';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			levels: {
+				Row: {
+					ability_score_bonuses: number | null;
+					cantrips_known: number | null;
+					class: string;
+					class_specific: Json | null;
+					id: string;
+					level: number;
+					prof_bonus: number | null;
+					slot_level_1: number | null;
+					slot_level_2: number | null;
+					slot_level_3: number | null;
+					slot_level_4: number | null;
+					slot_level_5: number | null;
+					slot_level_6: number | null;
+					slot_level_7: number | null;
+					slot_level_8: number | null;
+					slot_level_9: number | null;
+					spells_known: number | null;
+					subclass: string | null;
+					subclass_specific: Json | null;
+				};
+				Insert: {
+					ability_score_bonuses?: number | null;
+					cantrips_known?: number | null;
+					class: string;
+					class_specific?: Json | null;
+					id: string;
+					level: number;
+					prof_bonus?: number | null;
+					slot_level_1?: number | null;
+					slot_level_2?: number | null;
+					slot_level_3?: number | null;
+					slot_level_4?: number | null;
+					slot_level_5?: number | null;
+					slot_level_6?: number | null;
+					slot_level_7?: number | null;
+					slot_level_8?: number | null;
+					slot_level_9?: number | null;
+					spells_known?: number | null;
+					subclass?: string | null;
+					subclass_specific?: Json | null;
+				};
+				Update: {
+					ability_score_bonuses?: number | null;
+					cantrips_known?: number | null;
+					class?: string;
+					class_specific?: Json | null;
+					id?: string;
+					level?: number;
+					prof_bonus?: number | null;
+					slot_level_1?: number | null;
+					slot_level_2?: number | null;
+					slot_level_3?: number | null;
+					slot_level_4?: number | null;
+					slot_level_5?: number | null;
+					slot_level_6?: number | null;
+					slot_level_7?: number | null;
+					slot_level_8?: number | null;
+					slot_level_9?: number | null;
+					spells_known?: number | null;
+					subclass?: string | null;
+					subclass_specific?: Json | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'levels_class_fkey';
+						columns: ['class'];
+						isOneToOne: false;
+						referencedRelation: 'classes';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'levels_subclass_fkey';
+						columns: ['subclass'];
+						isOneToOne: false;
+						referencedRelation: 'subclasses';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			levels_features: {
+				Row: {
+					feature: string;
+					level: string;
+				};
+				Insert: {
+					feature: string;
+					level: string;
+				};
+				Update: {
+					feature?: string;
+					level?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'levels_features_feature_fkey';
+						columns: ['feature'];
+						isOneToOne: false;
+						referencedRelation: 'features';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'levels_features_level_fkey';
+						columns: ['level'];
+						isOneToOne: false;
+						referencedRelation: 'levels';
+						referencedColumns: ['id'];
+					}
+				];
 			};
 			spells: {
 				Row: {
@@ -132,6 +337,86 @@ export interface Database {
 					{
 						foreignKeyName: 'spells_id_fkey';
 						columns: ['id'];
+						isOneToOne: true;
+						referencedRelation: 'entities';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			subclass_spells: {
+				Row: {
+					feature: string | null;
+					id: string;
+					level: number;
+					spell: string;
+					subclass: string;
+				};
+				Insert: {
+					feature?: string | null;
+					id?: string;
+					level: number;
+					spell: string;
+					subclass: string;
+				};
+				Update: {
+					feature?: string | null;
+					id?: string;
+					level?: number;
+					spell?: string;
+					subclass?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'subclass_spells_feature_fkey';
+						columns: ['feature'];
+						isOneToOne: false;
+						referencedRelation: 'features';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'subclass_spells_spell_fkey';
+						columns: ['spell'];
+						isOneToOne: false;
+						referencedRelation: 'spells';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'subclass_spells_subclass_fkey';
+						columns: ['subclass'];
+						isOneToOne: false;
+						referencedRelation: 'subclasses';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			subclasses: {
+				Row: {
+					class: string;
+					id: string;
+					subclass_flavor: string;
+				};
+				Insert: {
+					class: string;
+					id: string;
+					subclass_flavor: string;
+				};
+				Update: {
+					class?: string;
+					id?: string;
+					subclass_flavor?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'subclasses_class_fkey';
+						columns: ['class'];
+						isOneToOne: false;
+						referencedRelation: 'classes';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'subclasses_id_fkey';
+						columns: ['id'];
+						isOneToOne: true;
 						referencedRelation: 'entities';
 						referencedColumns: ['id'];
 					}
@@ -191,6 +476,7 @@ export interface Database {
 					{
 						foreignKeyName: 'buckets_owner_fkey';
 						columns: ['owner'];
+						isOneToOne: false;
 						referencedRelation: 'users';
 						referencedColumns: ['id'];
 					}
@@ -258,12 +544,14 @@ export interface Database {
 					{
 						foreignKeyName: 'objects_bucketId_fkey';
 						columns: ['bucket_id'];
+						isOneToOne: false;
 						referencedRelation: 'buckets';
 						referencedColumns: ['id'];
 					},
 					{
 						foreignKeyName: 'objects_owner_fkey';
 						columns: ['owner'];
+						isOneToOne: false;
 						referencedRelation: 'users';
 						referencedColumns: ['id'];
 					}

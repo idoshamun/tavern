@@ -2,7 +2,7 @@ create table if not exists entities (
     id text primary key not null,
     type text not null,
     name text not null,
-    description text not null,
+    description text null,
     fts tsvector generated always as (to_tsvector('english', name)) stored
 );
 

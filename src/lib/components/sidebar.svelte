@@ -3,7 +3,8 @@
 
 	const items = [
 		{ name: 'Home', href: '/' },
-		{ name: 'Spells', href: '/spells' }
+		{ name: 'Spells', href: '/spells' },
+		{ name: 'Conditions', href: '/conditions' }
 	];
 
 	$: classesActive = (href: string) => (href === $page.url.pathname ? 'variant-soft-primary' : '');

@@ -37,7 +37,9 @@
 					{/if}
 				</div>
 			{/if}
-			<p class="whitespace-pre-line">{entity.description}</p>
+			{#if entity.description}
+				<p class="whitespace-pre-line">{entity.description}</p>
+			{/if}
 			{#if entity.type === 'spells'}
 				<div class="table-container">
 					<table class="table">

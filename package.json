@@ -17,6 +17,7 @@
 	},
 	"devDependencies": {
 		"@iconify-json/jam": "^1.1.5",
+		"@iconify-json/solar": "^1.1.5",
 		"@skeletonlabs/skeleton": "^2.4.0",
 		"@skeletonlabs/tw-plugin": "^0.2.3",
 		"@sveltejs/adapter-auto": "^2.0.0",
